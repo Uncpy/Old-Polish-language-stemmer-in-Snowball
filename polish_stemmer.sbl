@@ -123,6 +123,8 @@ backwardmode (
             'ędym'   (<-'ędem')
             'alym'   (<-'alem')
             'stym'   (<-'stem')
+            'ołym'   (<-'ołem')
+            'atym'   (<-'atem')
         )
     )
 )
