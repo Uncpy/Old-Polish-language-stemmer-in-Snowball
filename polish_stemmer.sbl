@@ -1,232 +1,138 @@
-integers ( p1 p2 )
-booleans ( Y_found )
-
 routines (
-    prelude postlude
-    mark_regions
-    shortv
-    R1 R2
-    Step_1a Step_1b Step_1c Step_2 Step_3 Step_4 Step_5
-    exception1
-    exception2
+   Step_1a Step_1b
+   exceptions
+   prefixes
 )
 
 externals ( stem )
 
-groupings ( v v_WXY valid_LI )
-
-stringescapes {}
-
-define v        'aeiouy'
-define v_WXY    v + 'wxY'
-
-define valid_LI 'cdeghkmnrt'
-
-define prelude as (
-    unset Y_found
-    do ( ['{'}'] delete)
-    do ( ['y'] <-'Y' set Y_found)
-    do repeat(goto (v ['y']) <-'Y' set Y_found)
-)
-
-define mark_regions as (
-    $p1 = limit
-    $p2 = limit
-    do(
-        among (
-            'gener'
-            'commun'  //  added May 2005
-            'arsen'   //  added Nov 2006 (arsenic/arsenal)
-            // ... extensions possible here ...
-        ) or (gopast v  gopast non-v)
-        setmark p1
-        gopast v  gopast non-v  setmark p2
+define exceptions as (
+    [substring] among(
+        'módz'  (<-'móc')
+        'biedz' (<-'biec')
+        'bydź'  (<-'być')
+        'maryj'  (<-'Mari')
+        'marj'   (<-'Mari')
+        'francuz' (<-'francus')
+        'ked'     (<-'kied')
+        'kel'     (<-'kiel')
     )
 )
+
+define prefixes as (
+    [substring] among(
+        'gieo'    (<-'geo')
+        'kie'     (<-'ke')
+        'dya'      (<-'dia')
+        'jener'  (<-'gener')
+    )
+)
+
+
 
 backwardmode (
 
-    define shortv as (
-        ( non-v_WXY v non-v )
-        or
-        ( non-v v atlimit )
-    )
-
-    define R1 as $p1 <= cursor
-    define R2 as $p2 <= cursor
-
     define Step_1a as (
-        try (
-            [substring] among (
-                '{'}' '{'}s' '{'}s{'}'
-                       (delete)
-            )
-        )
         [substring] among (
-        	'albym' (<-'ec')
-            'alabym' (<-'ec')
-            'sses' (<-'ss')
-            'ied' 'ies'
-                   ((hop 2 <-'i') or <-'ie')
-            's'    (next gopast v delete)
-            'us' 'ss'
+            'ya' (<-'ja')
+            'yi' (<-'ji')
+            'yj' (<-'ej')
+            'yą' (<-'ją')
+            'yę' (<-'ję')
+            'yji' (<-'ji')
+            'yią' (<-'ją')
+            'cyj' (<-'cji')
+
+
+
+            'lya' (<-'lia')
+            'lyą' (<-'lią')
+            'lyę' (<-'lię')
+            'lyi' (<-'lii')
+
+            'gya' (<-'gia')
+            'gyą' (<-'gią')
+            'gyę' (<-'gię')
+            'gyi' (<-'gii')
+
+            'fya' (<-'fia')
+            'fyą' (<-'fią')
+            'fyę' (<-'fię')
+            'fyi' (<-'fii')
+
+            'rya' (<-'ria')
+            'ryą' (<-'rią')
+            'ryę' (<-'rię')
+            'ryi' (<-'rii')
+            'ryum' (<-'rium')
+            'rym'  (<-'rym')
+
+
+            'tya' (<-'tia')
+            'tyą' (<-'tią')
+            'tyę' (<-'tię')
+            'tyi' (<-'tii')
+
+            'em'  (<-'ym')
+            'emi' (<-'ymi')
+            'iem' (<-'iem')
+
+            'nij' (<-'ni')
+
+            'dszy' (<-'dłszy')
+            'dya'  (<-'dia')
+            'dye'  (<-'dia')
+            'dyę'  (<-'dyę')
+            'dyą'  (<-'dyą')
+            'dyi'  (<-'dii')
+            'dyj'  (<-'dii')
+
+            'yotyzm' (<-'iotyzm')
+            'yotami' (<-'iotami')
+            'yjotka' (<-'iotka')
+            'yjota'  (<-'iota')
+            'yjami'  (<-'jami')
+            'yencyi' (<-'iencji')
+            'yszem'  (<-'jszym')
+
         )
     )
 
     define Step_1b as (
         [substring] among (
-            'eed' 'eedly'
-                (R1 <-'ee')
-            'ed' 'edly' 'ing' 'ingly'
-                (
-                test gopast v  delete
-                test substring among(
-                    'at' 'bl' 'iz'
-                         (<+ 'e')
-                    'bb' 'dd' 'ff' 'gg' 'mm' 'nn' 'pp' 'rr' 'tt'
-                    // ignoring double c, h, j, k, q, v, w, and x
-                         ([next]  delete)
-                    ''   (atmark p1  test shortv  <+ 'e')
-                )
-            )
-        )
-    )
-
-    define Step_1c as (
-        ['y' or 'Y']
-        non-v not atlimit
-        <-'i'
-    )
-
-    define Step_2 as (
-        [substring] R1 among (
-            'tional'  (<-'tion')
-            'enci'    (<-'ence')
-            'anci'    (<-'ance')
-            'abli'    (<-'able')
-            'entli'   (<-'ent')
-            'izer' 'ization'
-                      (<-'ize')
-            'ational' 'ation' 'ator'
-                      (<-'ate')
-            'alism' 'aliti' 'alli'
-                      (<-'al')
-            'fulness' (<-'ful')
-            'ousli' 'ousness'
-                      (<-'ous')
-            'iveness' 'iviti'
-                      (<-'ive')
-            'biliti' 'bli'
-                      (<-'ble')
-            'ogi'     ('l' <-'og')
-            'fulli'   (<-'ful')
-            'lessli'  (<-'less')
-            'li'      (valid_LI delete)
-            'albym'   (<-'ec')
-        )
-    )
-
-    define Step_3 as (
-        [substring] R1 among (
-            'tional'  (<- 'tion')
-            'ational' (<- 'ate')
-            'alize'   (<-'al')
-            'icate' 'iciti' 'ical'
-                      (<-'ic')
-            'ful' 'ness'
-                      (delete)
-            'ative'
-                      (R2 delete)  // 'R2' added Dec 2001
-        )
-    )
-
-    define Step_4 as (
-        [substring] R2 among (
-            'al' 'ance' 'ence' 'er' 'ic' 'able' 'ible' 'ant' 'ement'
-            'ment' 'ent' 'ism' 'ate' 'iti' 'ous' 'ive' 'ize'
-                      (delete)
-            'ion'     ('s' or 't' delete)
-        )
-    )
-
-    define Step_5 as (
-        [substring] among (
-            'e' (R2 or (R1 not shortv) delete)
-            'l' (R2 'l' delete)
-        )
-    )
-
-    define exception2 as (
-
-        [substring] atlimit among(
-            'inning' 'outing' 'canning' 'herring' 'earring'
-            'proceed' 'exceed' 'succeed'
-
-            // ... extensions possible here ...
-
+            'łym'    (<-'łem')
+            'rym'    (<-'rem')
+            'iymi'   (<-'imi')
+            'iym'    (<-'im')
+            'aią'    (<-'ają')
+            'ąci'    (<-'ący') 
+            'otym'   (<-'otem')
+            'okim'   (<-'okiem')
+            'ktym'   (<-'ktem')
+            'órem'   (<-'órym')
+            'óremi'  (<-'órymi')
+            'alem'   (<-'alym')
+            'ńcym'   (<-'ńcem')
+            'azym'   (<-'azem')
+            'odym'   (<-'odem')
+            'brem'   (<-'brym')
+            'ptym'   (<-'ptem')
+            'arzym'  (<-'arzem')
+            'trzym'  (<-'trzem')
+            'ewym'   (<-'ewem')
+            'ędym'   (<-'ędem')
+            'alym'   (<-'alem')
+            'stym'   (<-'stem')
         )
     )
 )
-
-define exception1 as (
-
-    [substring] atlimit among(
-
-        /* special changes: */
-
-        'skis'      (<-'ski')
-        'skies'     (<-'sky')
-        'dying'     (<-'die')
-        'lying'     (<-'lie')
-        'tying'     (<-'tie')
-
-        /* special -LY cases */
-
-        'idly'      (<-'idl')
-        'gently'    (<-'gentl')
-        'ugly'      (<-'ugli')
-        'early'     (<-'earli')
-        'only'      (<-'onli')
-        'singly'    (<-'singl')
-
-        // ... extensions possible here ...
-
-        /* invariant forms: */
-
-        'sky'
-        'news'
-        'howe'
-
-        'atlas' 'cosmos' 'bias' 'andes' // not plural forms
-
-        // ... extensions possible here ...
-    )
-)
-
-define postlude as (Y_found  repeat(goto (['Y']) <-'y'))
 
 define stem as (
+    do prefixes
 
-    exception1 or
-    not hop 3 or (
-        do prelude
-        do mark_regions
-        backwards (
-
-            do Step_1a
-
-            exception2 or (
-
-                do Step_1b
-                do Step_1c
-
-                do Step_2
-                do Step_3
-                do Step_4
-
-                do Step_5
-            )
-        )
-        do postlude
+    backwards (
+        do Step_1a
+        do Step_1b
     )
+    do exceptions
 )
