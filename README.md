@@ -29,5 +29,4 @@
 
 
 
-##All changes should be done in .sbl files and eventually in
-DIRECTORY/driver.c(for example .h name).
+##All changes should be done in .sbl files and eventually in DIRECTORY/driver.c(for example .h name).
