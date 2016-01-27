@@ -1,0 +1,33 @@
+routines (
+   Step_2
+)
+
+externals ( stem )
+
+
+
+
+
+backwardmode (
+    define Step_2 as (
+        [substring] among (
+            'ji'       (<-'ja')
+            'ję'       (<-'ja')
+            'je'       (<-'ja')
+            'ją'       (<-'ja')
+            'ej'       (<-'a')
+            'ii'       (<-'a')
+            'ił'       (<-'ić')
+            'ni'       (<-'ny')
+            'ńcem'     (<-'niec')
+        )
+    )
+)
+
+
+define stem as (
+
+    backwards (
+        do Step_2
+    )
+)

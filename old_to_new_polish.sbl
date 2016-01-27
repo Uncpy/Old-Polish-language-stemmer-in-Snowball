@@ -1,0 +1,143 @@
+routines (
+   Step_1a Step_1b
+   exceptions
+   prefixes
+)
+
+externals ( stem )
+
+define exceptions as (
+    [substring] among(
+        'módz'    (<-'móc')
+        'biedz'   (<-'biec')
+        'bydź'    (<-'być')
+        'maryj'   (<-'Mari')
+        'marj'    (<-'Mari')
+        'francuz' (<-'francus')
+        'ked'     (<-'kied')
+        'kel'     (<-'kiel')
+        'kaźń'    (<-'kaźń')
+    )
+)
+
+define prefixes as (
+    [substring] among(
+        'gieo'    (<-'geo')
+        'kie'     (<-'ke')
+        'dya'     (<-'dia')
+        'jener'   (<-'gener')
+        'kaź'     (<-'każ')
+        'mai'     (<-'maj')
+    )
+)
+
+
+
+backwardmode (
+
+    define Step_1a as (
+        [substring] among (
+
+            'ya'     (<-'ia')
+            'ye'     (<-'ie')
+            'yi'     (<-'ii')
+            'yą'     (<-'ią')
+            'yę'     (<-'ię')
+            'yji'    (<-'iji')
+            'yią'    (<-'ią')
+            'yj'     (<-'ej')
+            'yum'    (<-'ium')
+            'yów'    (<-'iów')
+
+
+            'cya'    (<-'cja')
+            'cye'    (<-'cje')
+            'cyi'    (<-'cji')
+            'cyj'    (<-'cej')
+            'cyą'    (<-'cją')
+            'cyę'    (<-'cję')
+            'cyji'   (<-'cji')
+            'cyią'   (<-'cją')
+
+
+            'zya'    (<-'zja')
+            'zye'    (<-'zje')
+            'zyi'    (<-'zji')
+            'zyj'    (<-'zej')
+            'zyą'    (<-'zją')
+            'zyę'    (<-'zję')
+            'zyji'   (<-'zji')
+            'zyią'   (<-'zją')
+            'zcyj'   (<-'zcji')
+
+
+            'sya'    (<-'sja')
+            'sye'    (<-'sje')
+            'syj'    (<-'sej')
+            'syą'    (<-'sją')
+            'syę'    (<-'sję')
+            'syji'   (<-'sji')
+            'syi'    (<-'sji')
+            'syią'   (<-'sją')
+            'scyj'   (<-'scji')
+
+
+            'yotyzm' (<-'iotyzm')
+            'yotami' (<-'iotami')
+            'yjotka' (<-'iotka')
+            'yjota'  (<-'iota')
+            'yjami'  (<-'jami')
+            'yencyi' (<-'iencji')
+            'yszem'  (<-'jszym')
+
+
+            'em'     (<-'ym')
+            'emi'    (<-'ymi')
+            'iem'    (<-'im')
+            'nij'    (<-'ni')
+            'dszy'   (<-'dłszy')
+            'lyi'    (<-'li')
+        )
+    )
+
+    define Step_1b as (
+        [substring] among (
+            'łym'    (<-'łem')
+            'rym'    (<-'rem')
+            'iymi'   (<-'imi')
+            'iym'    (<-'im')
+            'ąci'    (<-'ący') 
+            'otym'   (<-'otem')
+            'okim'   (<-'okiem')
+            'ktym'   (<-'ktem')
+            'órem'   (<-'órym')
+            'óremi'  (<-'órymi')
+            'alem'   (<-'alym')
+            'ńcym'   (<-'ńcem')
+            'azym'   (<-'azem')
+            'odym'   (<-'odem')
+            'brem'   (<-'brym')
+            'ptym'   (<-'ptem')
+            'arzym'  (<-'arzem')
+            'trzym'  (<-'trzem')
+            'ewym'   (<-'ewem')
+            'ędym'   (<-'ędem')
+            'alym'   (<-'alem')
+            'ołym'   (<-'ołem')
+            'atym'   (<-'atem')
+            'stem'   (<-'stym')
+        )
+    )
+)
+
+define stem as (
+    do prefixes
+
+    backwards (
+        do Step_1a
+    )
+     backwards (
+        do Step_1b
+     )
+    do exceptions
+)
